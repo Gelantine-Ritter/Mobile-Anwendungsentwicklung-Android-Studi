@@ -1,255 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+
+
+
+    <TableLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="7"
+        android:layout_margin="20dp"
+        tools:context=".MainActivity">
+
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:weightSum="1">
+
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_weight="1"
+                android:background="#9fa9ac"
+                android:textSize="18sp" />
+        </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:weightSum="4">
+
+
+        <Button
+            android:id="@+id/addieren"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="+"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/subtrahieren"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="-"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/multiplizieren"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="x"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/dividieren"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="÷"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/eins"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="1"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/zwei"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="2"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/drei"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="3"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:weightSum="3">
+
+
+
+    <Button
+            android:id="@+id/vier"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="4"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/fuenf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="5"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/sechs"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="6"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:weightSum="3">
+
+
+
+    <Button
+            android:id="@+id/sieben"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="7"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/acht"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="8"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/neun"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="9"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="3">
+
 
 
 
 
     <Button
-        android:id="@+id/c"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="20dp"
-        android:text="C"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/isEqualTo"
-        app:layout_constraintStart_toStartOf="parent" />
+                android:id="@+id/c"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:text="C"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/sieben"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="20dp"
-        android:text="7"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/c"
-        app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/zero"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:text="0"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/vier"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="20dp"
-        android:text="4"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/sieben"
-        app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/ce"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif"
+                android:text="CE"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </TableRow>
 
-    <Button
-        android:id="@+id/eins"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="20dp"
-        android:text="1"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/vier"
-        app:layout_constraintStart_toStartOf="parent" />
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:weightSum="1">
 
-    <Button
-        android:id="@+id/zero"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="0"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/isEqualTo"
-        app:layout_constraintStart_toEndOf="@+id/c" />
+        <Button
+            android:id="@+id/equal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:text="="
+            android:textAlignment="center"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+    </TableRow>
 
-    <Button
-        android:id="@+id/fuenf"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="5"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/acht"
-        app:layout_constraintStart_toEndOf="@+id/vier" />
 
-    <Button
-        android:id="@+id/zwei"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="2"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/fuenf"
-        app:layout_constraintStart_toEndOf="@+id/eins" />
 
-    <Button
-        android:id="@+id/dividieren"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="20dp"
-        android:text="÷"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/drei"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/multiplizieren" />
+</TableLayout>
 
-    <Button
-        android:id="@+id/multiplizieren"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginBottom="20dp"
-        android:text="x"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/drei"
-        app:layout_constraintStart_toEndOf="@+id/subtrahieren" />
-
-    <Button
-        android:id="@+id/subtrahieren"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginBottom="20dp"
-        android:text="-"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/zwei"
-        app:layout_constraintStart_toEndOf="@+id/addieren" />
-
-    <Button
-        android:id="@+id/addieren"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="20dp"
-        android:text="+"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/eins"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/sechs"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="20dp"
-        android:text="6"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/neun"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fuenf" />
-
-    <Button
-        android:id="@+id/drei"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="20dp"
-        android:text="3"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/sechs"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/zwei" />
-
-    <Button
-        android:id="@+id/neun"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="20dp"
-        android:text="9"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/ce"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/acht" />
-
-    <Button
-        android:id="@+id/acht"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="8"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/zero"
-        app:layout_constraintStart_toEndOf="@+id/sieben" />
-
-    <Button
-        android:id="@+id/ce"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="20dp"
-        android:text="CE"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/isEqualTo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/zero" />
-
-    <Button
-        android:id="@+id/isEqualTo"
-        android:layout_width="323dp"
-        android:layout_height="79dp"
-        android:layout_marginBottom="20dp"
-        android:text="="
-        android:textAlignment="center"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="307dp"
-        android:layout_height="93dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="20dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/subtrahieren"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,16 +3,22 @@ package com.example.calculator;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView ausgabeErgebnis;
+    TextView display;
     Button btn1, btn2,btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btnPlus, btnMinus, btnTeilen, btnMultipl, btnErgebnis, btnC, btnCE;
-    boolean addieren, subtrahieren, multiplizieren, dividieren;
-    float value1, value2;
+    boolean startNew;
+    String value1, value2, operation;
+    double finalResult = 0;
+
+
+
+    private static final String TAG = "MyActivity";
 
 
     @Override
@@ -20,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ausgabeErgebnis =(TextView) findViewById(R.id.result);
+        display =(TextView) findViewById(R.id.result);
 
         btn1=(Button) findViewById((R.id.eins));
         btn2=(Button) findViewById((R.id.zwei));
@@ -41,19 +47,25 @@ public class MainActivity extends AppCompatActivity {
         btnErgebnis= (Button) findViewById((R.id.equal));
 
         btnC=(Button) findViewById((R.id.c));
+        btnCE=(Button) findViewById((R.id.ce));
+
+        //Button Eingaben speichern und ggf verarbeiten
+        View.OnClickListener listener = new View.OnClickListener() {
+            public void onClick(View v) {
+                if (startNew) {
+                    display.setText("");
+                    startNew = false;
+                }
+                String input = display.getText().toString();
 
 
-
-        View.OnClickListener listener = new View.OnClickListener(){
-            String input = ausgabeErgebnis.getText().toString();
-
-            public void onClick(View v){
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.eins:
                         input += "1";
                         break;
                     case R.id.zwei:
                         input += "2";
+
                         break;
                     case R.id.drei:
                         input += "3";
@@ -79,91 +91,47 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.zero:
                         input += "0";
                         break;
-                    case R.id.addieren:
-                        input += "+";
+                    case R.id.c:
+                        input = "";
+                        startNew = true;
+                        break;
+                    case R.id.ce:
+                      //  Log.i(TAG, "onClick: input ist "+input);
+                        input=input.substring(0, input.length() - 1);
+                        break;
+
+                    case R.id.equal:
+                        compute();
                         break;
                 }
-                ausgabeErgebnis.setText(input);
 
-
-    /*
-                if (v.getId()==R.id.eins){
-                    ausgabeErgebnis.setText(ausgabeErgebnis.getText()+"1");
-                }
-                if (v.getId()==R.id.zwei){
-                    ausgabeErgebnis.setText(ausgabeErgebnis.getText()+"2");
-                }
-                if (v.getId()==R.id.drei){
-                    ausgabeErgebnis.setText(ausgabeErgebnis.getText()+"3");
-                }
-                if (v.getId()==R.id.vier){
-                    ausgabeErgebnis.setText(ausgabeErgebnis.getText()+"4");
-                }
-                if(v.getId()==R.id.fuenf){
-                    ausgabeErgebnis.setText(ausgabeErgebnis.getText()+"5");
-                }
-                if (v.getId()==R.id.sechs){
-                    ausgabeErgebnis.setText(ausgabeErgebnis.getText()+"6");
-                }
-                if (v.getId()==R.id.sieben){
-                    ausgabeErgebnis.setText(ausgabeErgebnis.getText()+"7");
-                }
-                if (v.getId()==R.id.acht){
-                    ausgabeErgebnis.setText(ausgabeErgebnis.getText()+"8");
-                }
-                if (v.getId()==R.id.neun){
-                    ausgabeErgebnis.setText(ausgabeErgebnis.getText()+"9");
-                }
-                if (v.getId()==R.id.zero){
-                    ausgabeErgebnis.setText(ausgabeErgebnis.getText()+"0");
-                }
-                if (v.getId()==R.id.addieren){
-                    value1= Float.parseFloat((String) ausgabeErgebnis.getText());
-                    addieren=true;
-                    ausgabeErgebnis.setText(null);
-                }
-                if (v.getId()==R.id.subtrahieren){
-                    value1= Float.parseFloat((String) ausgabeErgebnis.getText());
-                    subtrahieren=true;
-                    ausgabeErgebnis.setText(null);
-                }
-                if (v.getId()==R.id.multiplizieren){
-                    value1= Float.parseFloat((String) ausgabeErgebnis.getText());
-                    multiplizieren=true;
-                    ausgabeErgebnis.setText(null);
-                }
-                if (v.getId()==R.id.dividieren){
-                    value1= Float.parseFloat((String) ausgabeErgebnis.getText());
-                    dividieren=true;
-                    ausgabeErgebnis.setText(null);
-                }
-                if (v.getId()==R.id.equal){
-                    value2= Float.parseFloat(ausgabeErgebnis.getText()+"");
-                    if (addieren){
-                        ausgabeErgebnis.setText(value1+value2+"");
-                        addieren=false;
-                    }
-                    if (subtrahieren){
-                        ausgabeErgebnis.setText(value1-value2+"");
-                        subtrahieren=false;
-                    }
-                    if (multiplizieren){
-
-                        ausgabeErgebnis.setText(value1*value2+"");
-                        multiplizieren=false;
-                    }
-                    if (dividieren){
-                        ausgabeErgebnis.setText(value1/value2+"");
-                        dividieren=false;
-                    }                }
-                else if (v.getId()==R.id.c){
-                    ausgabeErgebnis.setText("");
-                }*/
+                display.setText(input);
             }
+
+
+
+            //Calculator Berechnungen
+            private void compute() {
+                value2=display.getText().toString();
+                switch (operation){
+                    case "+":
+                      Log.i(TAG, "onClick Plus: "+operation);
+                        Log.i(TAG, "onClick Plus Value1: "+value1);
+                        Log.i(TAG, "onClick Plus Value2: "+value2);
+                        finalResult = Double.parseDouble(value1) + Double.parseDouble(value2);
+                    case "-":
+                        finalResult = Double.parseDouble(value1) - Double.parseDouble(value2);
+                    case "/":
+                        finalResult = Double.parseDouble(value1) * Double.parseDouble(value2);
+                    case "*":
+                        finalResult = Double.parseDouble(value1) / Double.parseDouble(value2);
+
+                }
+                Log.i(TAG, "onClick Plus result: "+ finalResult);
+                display.setText(finalResult +"");
+            }
+
         };
-
-
-
 
         btn1.setOnClickListener(listener);
         btn2.setOnClickListener(listener);
@@ -176,17 +144,48 @@ public class MainActivity extends AppCompatActivity {
         btn9.setOnClickListener(listener);
         btn0.setOnClickListener(listener);
 
-        btnPlus.setOnClickListener(listener);
-        btnMinus.setOnClickListener(listener);
-        btnTeilen.setOnClickListener(listener);
-        btnMultipl.setOnClickListener(listener);
-
         btnErgebnis.setOnClickListener(listener);
 
         btnC.setOnClickListener(listener);
+        btnCE.setOnClickListener(listener);
+
+
+
+
+        //gewählte Operatoren in String speichern
+        View.OnClickListener op = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startNew=true;
+                value1=display.getText().toString();
+                switch(v.getId()){
+                    case R.id.addieren:
+                        operation="+";
+                        break;
+                    case R.id.subtrahieren:
+                        operation="-";
+                        break;
+                    case R.id.multiplizieren:
+                        operation="*";
+                        break;
+                    case R.id.dividieren:
+                        operation="/";
+                        break;
+                }
+            };
+
+
+
+
 
 
     };
+
+        btnMinus.setOnClickListener(op);
+        btnTeilen.setOnClickListener(op);
+        btnMultipl.setOnClickListener(op);
+
+    }
 }
 
 

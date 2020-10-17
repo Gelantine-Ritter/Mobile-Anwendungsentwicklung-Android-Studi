@@ -1,3 +1,6 @@
+
+
+
 package com.example.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,10 +16,14 @@ public class MainActivity extends AppCompatActivity {
     TextView display;
     Button btn1, btn2,btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btnPlus, btnMinus, btnTeilen, btnMultipl, btnErgebnis, btnC, btnCE;
     boolean startNew;
-    String value1, value2, operation;
+    String operation;
     double finalResult = 0;
 
     String input;
+    String lastOperation;
+    String value1String;
+    double value1;
+
 
     private static final String TAG = "MyActivity";
 
@@ -49,97 +56,137 @@ public class MainActivity extends AppCompatActivity {
         btnC=(Button) findViewById((R.id.c));
         btnCE=(Button) findViewById((R.id.ce));
 
+        startNew = true;
+
+
+
         //Button Eingaben speichern und ggf verarbeiten
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
-                // ausgabe reset
                 if (startNew) {
                     display.setText("");
                     startNew = false;
                 }
-                input = display.getText().toString();
-
 
                 switch (v.getId()) {
                     case R.id.eins:
                         input += "1";
+                        value1String += "1";
                         break;
                     case R.id.zwei:
                         input += "2";
+                        value1String += "2";
                         break;
                     case R.id.drei:
                         input += "3";
+                        value1String += "3";
                         break;
                     case R.id.vier:
                         input += "4";
+                        value1String += "4";
                         break;
                     case R.id.fuenf:
                         input += "5";
+                        value1String += "5";
+
                         break;
                     case R.id.sechs:
                         input += "6";
+                        value1String += "6";
                         break;
                     case R.id.sieben:
                         input += "7";
+                        value1String += "7";
+
                         break;
                     case R.id.acht:
                         input += "8";
+                        value1String += "8";
+
                         break;
                     case R.id.neun:
                         input += "9";
+                        value1String += "9";
+
                         break;
                     case R.id.zero:
-                        if(input!="")input += "0";
+                        if (input.length()==0){
+                            break;
+                        }
+                        input += "0";
+                        value1String += "0";
+
                         break;
-                        //ausgabe zurück setzen
+
+                    case R.id.addieren:
+                        if(lastOperation.equals("")) {
+                            value1 = Double.parseDouble(value1String);
+                            value1String="";
+                            lastOperation = "+";
+                        }else{
+                            compute();
+                            lastOperation="+";
+                        }
+                        if(input!=""){
+                            input += "+";
+                        }
+
+                        break;
+                    case R.id.subtrahieren:
+                        lastOperation ="-";
+                        zwischenSpeicher = Double.parseDouble(input);
+
+                        break;
+                    case R.id.dividieren:
+                        lastOperation ="/";
+                        zwischenSpeicher = Double.parseDouble(input);
+
+                        break;
+                    case R.id.multiplizieren:
+                        lastOperation = "*";
+                        zwischenSpeicher = Double.parseDouble(input);
+
+                        break;
+                    case R.id.equal:
+                        lastOperation = "";
+                        break;
+
                     case R.id.c:
                         input = "";
-                        startNew = true;
+                        clearDisplay();
                         break;
                     case R.id.ce:
-                        // ausgabestring um eine stelle kürzen (nicht wenn ausgabe leer ist)
-                        if(input != ""){
-                            input=input.substring(0, input.length() - 1);
-                        }
-                        break;
-                        //berechnung ausführen
-                    case R.id.equal:
-                        compute();
+                      //  Log.i(TAG, "onClick: input ist "+input);
+                        input=input.substring(0, input.length() - 1);
                         break;
                 }
 
                 display.setText(input);
             }
 
-
+            void clearDisplay(){
+                input="";
+            }
 
             //Calculator Berechnungen
             private void compute() {
-                // get value2 für berechnung
-                value2=display.getText().toString();
-                //value1+2 für berechnung parsen
-                //rechenoperation ausführen, ergebnis als ausgabewert anpassen
-                switch (operation){
-                    case "plus":
-                        finalResult = Double.parseDouble(value1) + Double.parseDouble(value2);
-                        input = finalResult + "";
+
+                switch (lastOperation){
+                    case "+":
+                        finalResult =
                         Log.i(TAG, "hier wurde + gedrückt");
-                        break;
-                    case "mal":
-                        finalResult = Double.parseDouble(value1) * Double.parseDouble(value2);
-                        input = finalResult + "";
-                        Log.i(TAG, "hier wurde * gedrückt");
-                        break;
-                    case "geteilt":
-                        finalResult = Double.parseDouble(value1) / Double.parseDouble(value2);
-                        input = finalResult + "";
-                        Log.i(TAG, "hier wurde / gedrückt");
-                        break;
-                    case "minus":
+
+                    case "-":
                         finalResult = Double.parseDouble(value1) - Double.parseDouble(value2);
-                        input = finalResult + "";
                         Log.i(TAG, "hier wurde - gedrückt");
-                        break;
+
+                    case "/":
+                        finalResult = Double.parseDouble(value1) * Double.parseDouble(value2);
+                        Log.i(TAG, "hier wurde * gedrückt");
+                    case "*":
+                        finalResult = Double.parseDouble(value1) / Double.parseDouble(value2);
+                        Log.i(TAG, "hier wurde / gedrückt");
+
                 }
                 Log.i(TAG, "onClick Plus result: "+ finalResult);
                 display.setText(finalResult +"");
@@ -147,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-        // set clicklisteners
         btn1.setOnClickListener(listener);
         btn2.setOnClickListener(listener);
         btn3.setOnClickListener(listener);
@@ -164,9 +210,6 @@ public class MainActivity extends AppCompatActivity {
         btnC.setOnClickListener(listener);
         btnCE.setOnClickListener(listener);
 
-
-
-
         //gewählte Operatoren in String speichern
         View.OnClickListener op = new View.OnClickListener(){
             @Override
@@ -175,16 +218,16 @@ public class MainActivity extends AppCompatActivity {
                 value1=display.getText().toString();
                 switch(v.getId()){
                     case R.id.addieren:
-                        operation="plus";
+                        operation="+";
                         break;
                     case R.id.subtrahieren:
-                        operation="minus";
+                        operation="-";
                         break;
                     case R.id.multiplizieren:
-                        operation="mal";
+                        operation="*";
                         break;
                     case R.id.dividieren:
-                        operation="geteilt";
+                        operation="/";
                         break;
                 }
             };
@@ -194,13 +237,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        };
+    };
+
 
 
         btnMinus.setOnClickListener(op);
-        btnPlus.setOnClickListener(op);
         btnTeilen.setOnClickListener(op);
         btnMultipl.setOnClickListener(op);
 
     }
 }
+
+
+
+
+
+

@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.gpsreceiver_v2.MainActivity">
+
+    <item
+        android:id="@+id/action_GPS"
+        android:orderInCategory="100"
+        android:title="@string/gps"
+        app:showAsAction="never" />
+    <item
+        android:textColor="#05386B"
+        android:id="@+id/action_Network"
+        android:orderInCategory="100"
+        android:title="@string/network"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+</menu>

@@ -23,7 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#5CDB95"
+        android:background="#f5f5f5"
         tools:context=".MainActivity">
 
         <LinearLayout

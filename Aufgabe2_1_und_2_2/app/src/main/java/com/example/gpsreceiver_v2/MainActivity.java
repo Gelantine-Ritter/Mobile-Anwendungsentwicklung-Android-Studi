@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        //je nach Fall sollen die GPS Daten abgerufen: über Satellit oder Netzwerkprovider
+        //je nach Fall/Menü Item sollen die GPS Daten abgerufen werden: über Satellit oder Netzwerkprovider
         switch (item.getItemId()) {
             case R.id.action_GPS:
                 getGPS();

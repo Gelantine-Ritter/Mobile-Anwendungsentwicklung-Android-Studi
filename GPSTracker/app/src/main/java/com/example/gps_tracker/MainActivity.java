@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
 
     boolean timerRunning;
-    CountDownTimer countDown;
+
+    Context context;
 
     Button btn_startStop;
     Switch switch1;
@@ -141,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
         // timed logging activated
         timerRunning = true;
-        logData();
     }
 
     @Override
@@ -151,30 +151,24 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         timerRunning = false;
     }
 
-    void printToCSVFinal(String finalString){
-            try {
-                FileOutputStream fos = new FileOutputStream(this.file);
-                fos.write(finalString.getBytes());
-                fos.close();
-
-
-
-                Log.d(TAG, "Printed the file.");
-            }catch (IOException e) {
-                e.printStackTrace();
-            }
-
-    }
-
     void printToCSV(List<String[]>list){
         String toCSVString = "";
 
         for (String[]arr : list) {
-            toCSVString.concat(arr[0]);
-            toCSVString.concat(arr[1]);
-            toCSVString.concat(arr[2]);
+            toCSVString += arr[0];
+            toCSVString += arr[1];
+            toCSVString += arr[2];
         }
-        printToCSVFinal(toCSVString);
+
+        try {
+            ////// HIER GEHTS GEWALTIG SCHIEF
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(toCSVString.getBytes());
+            fos.close();
+            Log.d(TAG, "WROTE CSV");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Timed Logger (GPS | Hoehenmesser)
@@ -190,10 +184,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
 
     private void createNewFile() {
-        Log.d(TAG, Environment.DIRECTORY_DOWNLOADS);
-        File fileStorageDir = this.getExternalFilesDir(Environment.DIRECTORY_DCIM);
+
+        // HIER KLEMMTS GEWALTIG
+
+        File fileStorageDir = (this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
+
         String timeStamp = new SimpleDateFormat("yyMMdd_HHmmss").format(new Date());
-        this.file = new File(fileStorageDir.getPath() + File.separator + timeStamp + ".csv");
+        file = new File(fileStorageDir.getPath() + File.separator + timeStamp + ".csv");
         //this.file = new File("blaubaer.csv");
     }
 
@@ -210,7 +207,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         // getting network status
         isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
+        getGPS();
+        /*
         if (!isGPSEnabled && isNetworkEnabled) {
             getGPSNetwork();
             Log.d(TAG, "NETWORK");
@@ -220,6 +218,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         } else {
             Log.d(TAG, "Geodaten können nicht abgerufen werden");
         }
+        */
     }
 
     @Override
@@ -227,10 +226,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         longitude = location.getLongitude();
         latitude = location.getLatitude();
 
-        Log.d(TAG, "NDKSAND");
-        Log.d(TAG, ""+longitude);
-        Log.d(TAG, ""+latitude);
-        Log.d(TAG, ""+hoehe);
+        logData();
     }
 
     private void getGPSNetwork() {

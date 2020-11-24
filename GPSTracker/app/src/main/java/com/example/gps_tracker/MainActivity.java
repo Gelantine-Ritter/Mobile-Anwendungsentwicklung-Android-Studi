@@ -40,9 +40,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
-public class MainActivity extends AppCompatActivity implements LocationListener {
+public class MainActivity extends AppCompatActivity implements LocationListener{
     private static final String TAG = "";
 
 
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     boolean isNetworkEnabled = false;
     // flag for GPS status
     boolean canGetLocation = false;
-    Location location; // location
+    Location location;
 
     // --------- Hoehenmesser ----------------
 
@@ -122,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
                     createNewFile();
 
-                    startLocationTracking();
+                    //startLocationTracking();
 
 
                 } else {
@@ -160,23 +162,26 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         timerRunning = false;
     }
 
-
-
-
     void printToCSVFinal(String finalString){
-        if (file.exists()) {
             try {
                 FileOutputStream fos = openFileOutput(file.getName(), Context.MODE_PRIVATE);
                 fos.write(finalString.getBytes());
                 fos.close();
+
+
+
+                Log.d(TAG, "Printed the file.");
+                Log.d(TAG, file.getName());
             }catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+
     }
 
     void printToCSV(List<String[]>list){
-        String toCSVString = null;
+        String toCSVString = "";
+
+
         for (String[]arr : list) {
             toCSVString.concat(arr[0]);
             toCSVString.concat(arr[1]);
@@ -187,34 +192,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     // Timed Logger (GPS | Hoehenmesser)
     void logData() {
-        //erstelle csv
-        while (timerRunning) {
-            countDown = new CountDownTimer(10000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
 
-                }
+        String [] data = new String [3];
+        data[0] = ""+longtitude;
+        data[1] = ""+latitude;
+        data[2] = "" + hoehe;
 
-                @Override
-                public void onFinish() {
-                    String [] data = new String [3];
-                    data[0] = ""+longtitude;
-                    data[1] = ""+latitude;
-                    data[2] = "" + hoehe;
-
-                    toCSVList.add(data);
-                }
-            };
-        }
-
+        toCSVList.add(data);
     }
 
 
     private void createNewFile() {
-        File fileStorageDir = null;
-        fileStorageDir = mContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-        String timeStamp = new SimpleDateFormat("yyMMdd_HHmmss").format(new Date());
-        this.file = new File(fileStorageDir.getPath() + File.separator + timeStamp + ".csv");
+        File fileStorageDir = this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        //String timeStamp = new SimpleDateFormat("yyMMdd_HHmmss").format(new Date());
+        //this.file = new File(fileStorageDir.getPath() + File.separator + timeStamp + ".csv");
+        this.file = new File("blaubaer.csv");
     }
 
 
@@ -224,7 +216,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
 
     // ------------ GPS ----------------------------
-
 
     void startLocationTracking () {
         // getting GPS status
@@ -282,4 +273,5 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
 
     }
+
 }

@@ -22,26 +22,19 @@ import androidx.core.app.ActivityCompat;
 
 import android.os.Environment;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity implements LocationListener{
@@ -51,17 +44,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
     boolean timerRunning;
     CountDownTimer countDown;
 
-    LocationManager locationManager;
     Button btn_startStop;
     Switch switch1;
-
-    Context mContext;
 
     boolean startStop;
 
     File file;
 
-    double longtitude;
+    double longitude;
     double latitude;
 
     double hoehe;
@@ -72,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
     // flag for GPS status
     boolean canGetLocation = false;
     Location location;
+    LocationManager locationManager;
 
     // --------- Hoehenmesser ----------------
 
@@ -92,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
     List<String[]> toCSVList;
 
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         Log.d(TAG, "ICH STARTE JETZT");
 
         // --------------------------------------------------------
+
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         toCSVList = new ArrayList<String[]>();
 
@@ -124,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
                     createNewFile();
 
-                    //startLocationTracking();
+                    startLocationTracking();
 
 
                 } else {
@@ -133,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
                     startStop = false;
                     btn_startStop.setText("Start");
-
 
                     printToCSV(toCSVList);
 
@@ -145,10 +138,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         });
 
         // -------------------------------------------------------
-
-        //get the location manager
-        LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
-
 
         // timed logging activated
         timerRunning = true;
@@ -164,14 +153,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
     void printToCSVFinal(String finalString){
             try {
-                FileOutputStream fos = openFileOutput(file.getName(), Context.MODE_PRIVATE);
+                FileOutputStream fos = new FileOutputStream(this.file);
                 fos.write(finalString.getBytes());
                 fos.close();
 
 
 
                 Log.d(TAG, "Printed the file.");
-                Log.d(TAG, file.getName());
             }catch (IOException e) {
                 e.printStackTrace();
             }
@@ -180,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
     void printToCSV(List<String[]>list){
         String toCSVString = "";
-
 
         for (String[]arr : list) {
             toCSVString.concat(arr[0]);
@@ -194,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
     void logData() {
 
         String [] data = new String [3];
-        data[0] = ""+longtitude;
+        data[0] = ""+longitude;
         data[1] = ""+latitude;
         data[2] = "" + hoehe;
 
@@ -203,10 +190,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
 
     private void createNewFile() {
-        File fileStorageDir = this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-        //String timeStamp = new SimpleDateFormat("yyMMdd_HHmmss").format(new Date());
-        //this.file = new File(fileStorageDir.getPath() + File.separator + timeStamp + ".csv");
-        this.file = new File("blaubaer.csv");
+        Log.d(TAG, Environment.DIRECTORY_DOWNLOADS);
+        File fileStorageDir = this.getExternalFilesDir(Environment.DIRECTORY_DCIM);
+        String timeStamp = new SimpleDateFormat("yyMMdd_HHmmss").format(new Date());
+        this.file = new File(fileStorageDir.getPath() + File.separator + timeStamp + ".csv");
+        //this.file = new File("blaubaer.csv");
     }
 
 
@@ -225,8 +213,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
         if (!isGPSEnabled && isNetworkEnabled) {
             getGPSNetwork();
+            Log.d(TAG, "NETWORK");
         } else if (!isNetworkEnabled && isGPSEnabled) {
             getGPS();
+            Log.d(TAG, "GPS");
         } else {
             Log.d(TAG, "Geodaten können nicht abgerufen werden");
         }
@@ -234,13 +224,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        longtitude = location.getLongitude();
+        longitude = location.getLongitude();
         latitude = location.getLatitude();
+
+        Log.d(TAG, "NDKSAND");
+        Log.d(TAG, ""+longitude);
+        Log.d(TAG, ""+latitude);
+        Log.d(TAG, ""+hoehe);
     }
 
     private void getGPSNetwork() {
         Log.d(TAG, "getGPSNetwork: Ich bin hier");
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -258,7 +252,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
     //Case: GPS Daten über Satellit abrufen
     private void getGPS() {
         Log.d(TAG, "getGPS: Ich bin hier");
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling

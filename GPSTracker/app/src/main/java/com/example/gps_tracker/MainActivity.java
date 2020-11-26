@@ -1,6 +1,7 @@
 package com.example.gps_tracker;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -23,17 +24,16 @@ import androidx.core.app.ActivityCompat;
 import android.os.Environment;
 import android.util.Log;
 
-import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -62,8 +62,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
     boolean isNetworkEnabled = false;
     // flag for GPS status
     boolean canGetLocation = false;
-    Location location;
     LocationManager locationManager;
+
+    String timestampNow;
 
     // --------- Hoehenmesser ----------------
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         @Override
         public void onSensorChanged(SensorEvent event) {
             float [] sensorValues = event.values;
-            hoehe = (288.15 / 0.0065 ) * ( 1 - Math.pow((sensorValues[0]/1013.25), 1.0/5.255));
+            setHoehe((288.15 / 0.0065 ) * ( 1 - Math.pow((sensorValues[0]/1013.25), 1.0/5.255)));
         }
 
         @Override
@@ -81,6 +82,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
         }
     };
+
+    void setHoehe (double h){
+        this.hoehe = h;
+    }
+
+    // ------------------------------------------------------
 
     List<String[]> toCSVList;
 
@@ -91,58 +98,44 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(TAG, "ICH STARTE JETZT");
-
-        // --------------------------------------------------------
-
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        toCSVList = new ArrayList<String[]>();
-
-        file = null;
-
-        // false == läuft nicht
-        // true == läuft
-        startStop = false;
-
-
-        Log.d(TAG, "Ich laufe immer noch.");
-
         btn_startStop = findViewById(R.id.btn_StartStop);
         switch1 = findViewById(R.id.csvGpx);
 
-        btn_startStop.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (!startStop) {
-                    startStop = true;
-                    btn_startStop.setText("Stop");
+        // --------------------------------------------------------
 
-                    createNewFile();
-
-                    startLocationTracking();
-
-
-                } else {
-
-                    // speicher array in csv
-
-                    startStop = false;
-                    btn_startStop.setText("Start");
-
-                    printToCSV(toCSVList);
-
-                    // reset file damit ein neues file angelegt werden kann
-                    file = null;
-                }
-
-            }
-        });
+        init();
+        startButtonActivity();
 
         // -------------------------------------------------------
 
         // timed logging activated
         timerRunning = true;
     }
+
+    void init () {
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        toCSVList = new ArrayList<String[]>();
+        startStop = false;
+        file = null;
+    }
+
+    void startButtonActivity() {
+        btn_startStop.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (!startStop) {
+                    startStop = true;
+                    btn_startStop.setText("Stop");
+                    initLocationTracking();
+                } else {
+                    startStop = false;
+                    btn_startStop.setText("Start");
+                    generateCSV(prepareDataForCSVPrinting(toCSVList));
+                    file = null;
+                }
+            }
+        });
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -151,86 +144,79 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         timerRunning = false;
     }
 
-    void printToCSV(List<String[]>list){
-        String toCSVString = "";
+    String prepareDataForCSVPrinting(List<String[]>list){
+        // CSV Header first
+        String toCSVString = "Time,Longitude,Latitude,Height\n";
 
         for (String[]arr : list) {
-            toCSVString += arr[0];
-            toCSVString += arr[1];
-            toCSVString += arr[2];
+            toCSVString += arr[0] + ",";
+            toCSVString += arr[1] + ",";
+            toCSVString += arr[2] + ",";
+            toCSVString += arr[3] + "\n";
         }
-
-        try {
-            ////// HIER GEHTS GEWALTIG SCHIEF
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(toCSVString.getBytes());
-            fos.close();
-            Log.d(TAG, "WROTE CSV");
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+        return toCSVString;
     }
 
-    // Timed Logger (GPS | Hoehenmesser)
+    // PREPARE DATA FOR PRINTING
+    // GETS CALLED ALL THE TIME (VIA ONLOCATIONCHANGED)
     void logData() {
 
-        String [] data = new String [3];
-        data[0] = ""+longitude;
-        data[1] = ""+latitude;
-        data[2] = "" + hoehe;
+        this.timestampNow = String.valueOf(new Timestamp(System.currentTimeMillis()));
+
+        String [] data = new String [4];
+
+        data[0] = ""+ this.timestampNow;
+        data[1] = ""+ this.longitude;
+        data[2] = ""+ this.latitude;
+        data[3] = "" + this.hoehe;
 
         toCSVList.add(data);
     }
 
+    public void generateCSV(String content) {
 
-    private void createNewFile() {
+        String filename = "tracked_data_" + timestampNow + ".csv";
+        Log.d(TAG, content);
 
-        // HIER KLEMMTS GEWALTIG
+        File root = getExternalFilesDir ("CSV_STORE");
+        if (!root.exists()) {
+            root.mkdirs();
+        }
 
-        File fileStorageDir = (this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
+        try {
+            File csvfile = new File(root, filename);
+            FileWriter writer = new FileWriter(csvfile);
+            writer.append(content);
+            writer.flush();
+            writer.close();
 
-        String timeStamp = new SimpleDateFormat("yyMMdd_HHmmss").format(new Date());
-        file = new File(fileStorageDir.getPath() + File.separator + timeStamp + ".csv");
-        //this.file = new File("blaubaer.csv");
+            // THIS IS WHERE THE DATA HIDES
+            // Log.d(TAG, "YHUHE ||| " + csvfile.getAbsolutePath() );
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-
-    // ----------- HOEHENMESSER ------------------
-
-
-
 
     // ------------ GPS ----------------------------
 
-    void startLocationTracking () {
+    // INIT LOCATION TRACKING
+    void initLocationTracking () {
         // getting GPS status
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         // getting network status
         isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         getGPS();
-        /*
-        if (!isGPSEnabled && isNetworkEnabled) {
-            getGPSNetwork();
-            Log.d(TAG, "NETWORK");
-        } else if (!isNetworkEnabled && isGPSEnabled) {
-            getGPS();
-            Log.d(TAG, "GPS");
-        } else {
-            Log.d(TAG, "Geodaten können nicht abgerufen werden");
-        }
-        */
     }
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        longitude = location.getLongitude();
-        latitude = location.getLatitude();
-
+        this.longitude = location.getLongitude();
+        this.latitude = location.getLatitude();
         logData();
     }
 
     private void getGPSNetwork() {
-        Log.d(TAG, "getGPSNetwork: Ich bin hier");
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -247,7 +233,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
 
     //Case: GPS Daten über Satellit abrufen
     private void getGPS() {
-        Log.d(TAG, "getGPS: Ich bin hier");
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -260,7 +245,5 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
-
     }
-
 }

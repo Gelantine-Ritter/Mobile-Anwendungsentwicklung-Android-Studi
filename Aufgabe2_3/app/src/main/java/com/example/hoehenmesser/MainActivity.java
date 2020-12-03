@@ -2,17 +2,19 @@ package com.example.hoehenmesser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SyncStatusObserver;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-
+import android.content.SharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,13 +33,17 @@ public class MainActivity extends AppCompatActivity {
 
     boolean sensorChanged;
 
+    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor sharedPreferencesEditor;
 
     private SensorEventListener sensorEventListener = new SensorEventListener() {
+
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
             float[]sensorValues = sensorEvent.values;
             if (!sensorChanged) sensorValue = sensorValues[0];
             textPressure.setText(String.format("Druck: %s", String.valueOf(sensorValue)));
+            System.out.println("In SENSORCHANGED()");
         }
 
         @Override
@@ -46,11 +52,21 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("In ONDESTROY()");
+        // SHARED PREF
+        saveValue();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Shared Preference Initialization
+        sharedPreferences = this.getSharedPreferences("storedValues", MODE_PRIVATE);
 
         sensorChanged = false;
 
@@ -65,11 +81,13 @@ public class MainActivity extends AppCompatActivity {
         sensorManager = (SensorManager) getSystemService((SENSOR_SERVICE));
         druckSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
+        // shared Preference - get the values and set seekbar accordingly
+        setValue();
+        System.out.println(slideValue);
+
         seekBar.setMin(-100);
         seekBar.setMax(100);
         seekBar.setProgress(0);
-        slideValue = 0;
-
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -108,9 +126,33 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    void setValue () {
+        // SHARED PREFERENCE
+        slideValue = sharedPreferences.getFloat("slideVal", 3.125f);
+        System.out.println("did set Value of slider to " + slideValue);
+    }
+
+    void saveValue () {
+        System.out.println("in saveValue() -- sensorValue saved = " + sensorValue);
+        sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putFloat("slideVal",(float)sensorValue);
+        sharedPreferencesEditor.apply();
+        System.out.println("saved Value");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // SHARED PREF
+        saveValue();
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(sensorEventListener, druckSensor, SensorManager.SENSOR_DELAY_UI);
+        // SHARED PREF
+        setValue();
     }
 }

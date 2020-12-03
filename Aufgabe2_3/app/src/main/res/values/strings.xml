@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Hoehenmesser</string>
+    <string name="preference_file_key">mySharedPref</string>
 </resources>

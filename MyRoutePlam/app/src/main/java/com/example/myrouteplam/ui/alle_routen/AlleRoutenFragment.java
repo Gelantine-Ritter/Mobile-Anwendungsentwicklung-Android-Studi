@@ -1,7 +1,10 @@
 package com.example.myrouteplam.ui.alle_routen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +21,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myrouteplam.MainActivity;
 import com.example.myrouteplam.R;
 import com.example.myrouteplam.entities.Route;
+import com.example.myrouteplam.ui.single_route.Single_Route_Fragment;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlleRoutenFragment extends Fragment {
+public class AlleRoutenFragment extends Fragment implements AdapterListe.OnRouteListener {
+
+    private static final String TAG ="" ;
+    List<Route> routeList = MainActivity.routeDB.routeDao().getRouten();
+    ArrayList<Route> routenListeArr = new ArrayList<>();
 
     Context c;
 
@@ -46,8 +54,9 @@ public class AlleRoutenFragment extends Fragment {
             public void onChanged(@Nullable String s) {
 
                 //Items für die Listendarstellung
-                List<Route> routeList = MainActivity.routeDB.routeDao().getRouten();
-                ArrayList<Route> routenListeArr = new ArrayList<>();
+               // List<Route> routeList = MainActivity.routeDB.routeDao().getRouten();
+               // ArrayList<Route> routenListeArr = new ArrayList<>();
+
                 for (Route r : routeList){
                     String bezeichnung = r.getBezeichnung();
                     String beginn = r.getBeginn();
@@ -65,7 +74,7 @@ public class AlleRoutenFragment extends Fragment {
                 mRecyclerView = root.findViewById(R.id.liste_routen);
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(c);
-                mAdapter = new AdapterListe(routenListeArr);
+                mAdapter = new AdapterListe(routenListeArr, AlleRoutenFragment.this::onRouteClick);
 
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
@@ -77,4 +86,19 @@ public class AlleRoutenFragment extends Fragment {
     }
 
 
+    @Override
+    public void onRouteClick(int position) {
+        Route route = routenListeArr.get(position);
+        String bezeichnung = route.getBezeichnung();
+        double dauer = route.getDauer();
+        Log.i(TAG, "Routen Bezeichnung : "+bezeichnung+" und Dauer "+dauer);
+        Log.d(TAG, "onRouteClick: Item in RecycleView geklickt");
+
+
+      //  Intent intent = new Intent(c, Single_Route_Fragment.class);
+      //  intent.putExtra("route_object", (Parcelable) routenListeArr.get(position));
+      //  startActivity(intent);
+
+
+    }
 }

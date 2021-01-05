@@ -18,25 +18,7 @@ import java.util.ArrayList;
 
 public class AdapterListe extends RecyclerView.Adapter<AdapterListe.ExampleViewHolder> {
     private ArrayList<Route> mExampleList;
-    
-
-    public static class ExampleViewHolder extends RecyclerView.ViewHolder {
-        //Variablen für die Items aus TestItem xml
-        public ImageView mImageView;
-        public TextView mTextView1;
-        public TextView mTextView2;
-
-        //Konstruktor für Items im ViewHolder
-        public ExampleViewHolder(View itemView) {
-            super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
-            mTextView1 = itemView.findViewById(R.id.textView);
-            mTextView2 = itemView.findViewById(R.id.textView2);
-            //um values einzufügen --> onBindViewHolder
-            //System.out.println(mTextView1);
-
-        }
-    }
+    private OnRouteListener mOnRouteListener;
 
     //
     public AdapterListe(ArrayList<Route> exampleList) {
@@ -44,13 +26,55 @@ public class AdapterListe extends RecyclerView.Adapter<AdapterListe.ExampleViewH
 
     }
 
+    public AdapterListe(ArrayList<Route> routes, OnRouteListener onRouteListener){
+        this.mExampleList=routes;
+        this.mOnRouteListener=onRouteListener;
+    }
+
+
+    //Interface für einzelne Items
+    public interface OnRouteListener{
+        void onRouteClick(int position);
+    }
+    
+
+    public static class ExampleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        //Variablen für die Items aus TestItem xml
+        public ImageView mImageView;
+        public TextView mTextView1;
+        public TextView mTextView2;
+
+        OnRouteListener onRouteListener;
+
+        //Konstruktor für Items im ViewHolder
+        public ExampleViewHolder(View itemView, OnRouteListener onRouteListener) {
+            super(itemView);
+            this.onRouteListener=onRouteListener;
+            mImageView = itemView.findViewById(R.id.imageView);
+            mTextView1 = itemView.findViewById(R.id.textView);
+            mTextView2 = itemView.findViewById(R.id.textView2);
+            //um values einzufügen --> onBindViewHolder
+            //System.out.println(mTextView1);
+
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            onRouteListener.onRouteClick(getAdapterPosition());
+
+        }
+    }
+
+
     @NonNull
     @Override
     //Layout in den Adapter packen
     public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //Layout für ein Item einfügen
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ltest_item_liste, parent, false);
-        ExampleViewHolder evh = new ExampleViewHolder(v);
+        ExampleViewHolder evh = new ExampleViewHolder(v, mOnRouteListener);
         return evh;
     }
 

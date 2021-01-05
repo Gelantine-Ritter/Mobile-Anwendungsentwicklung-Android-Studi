@@ -22,4 +22,8 @@
         android:name="com.example.myrouteplam.ui.neue_route.NeueRouteFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/neue_Route" />
+
+
+
+
 </navigation>

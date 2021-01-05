@@ -39,6 +39,14 @@ public class Route {
         this.id = counter++;
     }
 
+    public Route(String bezeichnung, String beginn, String ende, byte[] gpx, double dauer) {
+        this.bezeichnung=bezeichnung;
+        this.beginn=beginn;
+        this.ende=ende;
+        this.gpxData=gpx;
+        this.dauer = dauer;
+    }
+
     public int getId() {
         return id;
     }

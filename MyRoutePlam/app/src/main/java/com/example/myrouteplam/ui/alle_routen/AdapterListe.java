@@ -1,6 +1,7 @@
 package com.example.myrouteplam.ui.alle_routen;
 
 import com.example.myrouteplam.R;
+import com.example.myrouteplam.entities.Route;
 
 
 import android.view.LayoutInflater;
@@ -16,8 +17,8 @@ import java.util.ArrayList;
 
 
 public class AdapterListe extends RecyclerView.Adapter<AdapterListe.ExampleViewHolder> {
-    private ArrayList<ExampleItem> mExampleList;
-
+    private ArrayList<Route> mExampleList;
+    
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
         //Variablen für die Items aus TestItem xml
@@ -32,15 +33,13 @@ public class AdapterListe extends RecyclerView.Adapter<AdapterListe.ExampleViewH
             mTextView1 = itemView.findViewById(R.id.textView);
             mTextView2 = itemView.findViewById(R.id.textView2);
             //um values einzufügen --> onBindViewHolder
-
             //System.out.println(mTextView1);
-
 
         }
     }
 
     //
-    public AdapterListe(ArrayList<ExampleItem> exampleList) {
+    public AdapterListe(ArrayList<Route> exampleList) {
         mExampleList = exampleList;
 
     }
@@ -56,14 +55,13 @@ public class AdapterListe extends RecyclerView.Adapter<AdapterListe.ExampleViewH
     }
 
 
-    //Infos für Konstruktor Items kommt au ArrayList aus AlleRoutenFragment
+    //Infos für Konstruktor Items kommt aus ArrayList aus AlleRoutenFragment
     //position ist item bei 0 angefangen
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
-        ExampleItem currentItem = mExampleList.get(position);
-        holder.mImageView.setImageResource(currentItem.getmImageResource());
-        holder.mTextView1.setText(currentItem.getmText1());
-        holder.mTextView2.setText(currentItem.getmText2());
+        Route currentItem = mExampleList.get(position);
+        holder.mTextView1.setText(currentItem.getBezeichnung());
+        holder.mTextView2.setText("" + currentItem.getDauer());
 
 
     }

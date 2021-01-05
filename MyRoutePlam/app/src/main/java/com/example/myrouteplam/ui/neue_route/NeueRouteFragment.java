@@ -7,11 +7,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myrouteplam.MainActivity;
 import com.example.myrouteplam.R;
 import com.example.myrouteplam.entities.Route;
 
@@ -40,30 +43,24 @@ public class NeueRouteFragment extends Fragment implements LocationListener {
     String longLatStart;
     String longLatStop;
 
-
     Button btn_startStop;
     TextView text;
     boolean startStop;
     boolean isGPSEnabled = false;
-    // flag for network status
     boolean isNetworkEnabled = false;
-    // flag for GPS status
     boolean canGetLocation = false;
     LocationManager locationManager;
-    Context c;
-
-    String timestampNow;
-
-    List<String[]> dataPointList;
-
-
     double longitude;
     double latitude;
 
+    Context c;
+    String timestampNow;
+
+    List<String[]> dataPointList;
     byte[] gpxFile;
 
-
     private NeueRouteViewModel neueRouteViewModel;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -71,14 +68,14 @@ public class NeueRouteFragment extends Fragment implements LocationListener {
         View root = inflater.inflate(R.layout.neue_route, container, false);
         final TextView textView = root.findViewById(R.id.txtView_neue_route);
         Button btn_startRoute = root.findViewById(R.id.btn_neue_route);
+        init();
 /**
- * Start Button/Event um Route aufzuzeichnen
+ * Methode zeichnet nach Betätigung die Route auf.
+ * Die einzelnen Daten werden ausgelesen und dem Routen Objekt für die Datenbank übergeben.
  */
         btn_startRoute.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                init();
                 //Aufnahme der Route
                 if (!startStop) {
                     startStop = true;
@@ -86,59 +83,73 @@ public class NeueRouteFragment extends Fragment implements LocationListener {
                     textView.setText("I'm tracking your steps.");
                     initLocationTracking();
                 } else {
+                    logDataEnde();
                     startStop = false;
                     btn_startRoute.setText("Start");
                     textView.setText("");
 
                     generateGPX(dataPointList);
 
+
                     Route routeObj = new Route();
                     routeObj.setBeginn(longLatStart);
-                    routeObj.setBezeichnung("track"+routeObj.getId());
+                    routeObj.setBezeichnung("track" + routeObj.getId());
                     routeObj.setDauer((double) getDateDiff(timeStart, timeStop));
                     routeObj.setEnde(longLatStop);
                     routeObj.setGpxData(gpxFile);
                     //routeObj.setPois();
+
+                    //Obj der Datenbank hinzufügen/pushen
+                    MainActivity.routeDB.routeDao().addRoute(routeObj);
+
+                    Toast.makeText(getActivity(), "Route hinzugefügt", Toast.LENGTH_SHORT).show();
+                    clearData();
                 }
-
-
-//----------------------abspeichern----------------------------------
-
-
             }
         });
 
 
         neueRouteViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-
-
             @Override
             public void onChanged(@Nullable String s) {
-
-
             }
         });
         return root;
     }
 
-
+    /**
+     * Methode initialisiert die Vorgänge damit eine Route aufgezeichnet wird
+     */
     void init() {
-        routeBegin = true;
+        startStop = false;
         c = getActivity();
         locationManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
+        routeBegin = true;
+        dataPointList = new ArrayList<String[]>();
+
+    }
+
+
+    /**
+     * Methode setzt Variablen auf Initialwerte.
+     */
+    void clearData() {
+        routeBegin = true;
         dataPointList = new ArrayList<String[]>();
         startStop = false;
     }
 
 
     /**
-     * Geodaten per Location Manager abrufen
+     * Die Methode ruft Geodaten per Location Manager ab.
+     * Es wird je nach Verfügung GPS oder das Netzwerk verwendet.
      */
     void initLocationTracking() {
         // getting GPS status
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         // getting network status
         isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
         if (isGPSEnabled)
             getGPS();
         else
@@ -186,9 +197,9 @@ public class NeueRouteFragment extends Fragment implements LocationListener {
 
 
     /**
-     * Methode wird via OnLocationChanged aufgerufen  und speichert die Werte zeilenweise ab
+     * In der Methode werden die Daten (Koordinaten und Timestamp) vorbereitet und
+     * Startwerte für die Datenbank werden extrahiert.
      */
-
     void logData() {
 
         this.timestampNow = String.valueOf(new Timestamp(System.currentTimeMillis()));
@@ -209,6 +220,9 @@ public class NeueRouteFragment extends Fragment implements LocationListener {
         }
     }
 
+    /**
+     * In dieser Methode werden Endwerte nach dem loggen der Route extrahiert
+     */
     public void logDataEnde() {
         this.timestampNow = String.valueOf(new Timestamp(System.currentTimeMillis()));
 
@@ -220,15 +234,12 @@ public class NeueRouteFragment extends Fragment implements LocationListener {
 
         dataPointList.add(data);
 
-
         longLatStop = longitude + " " + latitude;
         timeStop = new Timestamp(System.currentTimeMillis());
-
-
     }
 
     /**
-     * Methode erstellt eine GPX Datei aus den getrackten Daten
+     * Methode erstellt eine GPX Datei aus den getrackten Daten und loggt zeilenwise die Route.
      */
     void generateGPX(List<String[]> list) {
         String track_name = getRandomName();
@@ -251,13 +262,24 @@ public class NeueRouteFragment extends Fragment implements LocationListener {
 
     }
 
-
+    /**
+     * Methode erzeugt IDs/Namen für die GPX getrackten Routen
+     *
+     * @return Filename
+     */
     String getRandomName() {
         Random a = new Random();
         String f = "" + a.nextDouble();
         return f;
     }
 
+    /**
+     * Die Methode berechnet die Differenz der Start- und Endwerte der getrackten Route.
+     *
+     * @param oldTs Startwerte der Timestamp
+     * @param newTs Endwerte der Timestamp
+     * @return
+     */
     public static long getDateDiff(Timestamp oldTs, Timestamp newTs) {
         long diffInMS = newTs.getTime() - oldTs.getTime();
         return TimeUnit.MINUTES.convert(diffInMS, TimeUnit.SECONDS);

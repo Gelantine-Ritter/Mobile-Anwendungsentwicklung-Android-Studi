@@ -15,9 +15,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myrouteplam.MainActivity;
 import com.example.myrouteplam.R;
+import com.example.myrouteplam.entities.Route;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AlleRoutenFragment extends Fragment {
 
@@ -42,24 +46,26 @@ public class AlleRoutenFragment extends Fragment {
             public void onChanged(@Nullable String s) {
 
                 //Items für die Listendarstellung
-                ArrayList<ExampleItem> exampleList = new ArrayList<>();
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 1", "Line 2"));
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 3", "Line 4"));
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 5", "Line 6"));
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 1", "Line 2"));
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 3", "Line 4"));
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 5", "Line 6"));
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 1", "Line 2"));
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 3", "Line 4"));
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 5", "Line 6"));
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 1", "Line 2"));
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 3", "Line 4"));
-                exampleList.add(new ExampleItem(R.drawable.ic_baseline_hiking_24, "Line 5", "Line 6"));
+                List<Route> routeList = MainActivity.routeDB.routeDao().getRouten();
+                ArrayList<Route> routenListeArr = new ArrayList<>();
+                for (Route r : routeList){
+                    String bezeichnung = r.getBezeichnung();
+                    String beginn = r.getBeginn();
+                    String ende = r.getEnde();
+                    byte[] gpx = r.getGpxData();
+                    double dauer=r.getDauer();
+                    //Poi poi = r.getPoi();
+
+                    routenListeArr.add(new Route(bezeichnung, beginn, ende, gpx,dauer));
+
+                }
+
+
 
                 mRecyclerView = root.findViewById(R.id.liste_routen);
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(c);
-                mAdapter = new AdapterListe(exampleList);
+                mAdapter = new AdapterListe(routenListeArr);
 
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);

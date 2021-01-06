@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">MyRoutePlam</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Alle Routen</string>
-    <string name="title_notifications">Neue Route</string>
-
-</resources>

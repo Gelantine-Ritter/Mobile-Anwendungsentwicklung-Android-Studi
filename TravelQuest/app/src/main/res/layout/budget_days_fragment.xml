@@ -6,36 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".fragments.Budget_Days"
     android:id="@+id/fr_budget_days"
+    android:background="@color/background_all"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txt_budget"
-            android:layout_width="221dp"
-            android:layout_height="76dp"
-            android:text="Wie ist dein Budget?"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <RelativeLayout
+            android:id="@+id/shape_layout"
+            android:layout_width="216dp"
+            android:layout_height="216dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circle_bordershape"
+            app:layout_constraintBottom_toTopOf="@+id/txt_budget"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.139" />
+            app:layout_constraintVertical_bias="0.486">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_main"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="100dp">
+
+                <ImageView
+                    android:id="@+id/roundedimage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/budget_picture" />
+
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_budget"
+            android:layout_width="223dp"
+            android:layout_height="47dp"
+            android:layout_marginBottom="380dp"
+            android:text="Wie ist dein Budget?"
+            android:textAlignment="center"
+            android:textColor="@color/font_color"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <SeekBar
             android:id="@+id/seekBar_budget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="50dp"
-            android:progress="100"
-            android:min="100"
             android:max="3000"
+            android:min="100"
+            android:progress="100"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,17 +78,16 @@
             android:id="@+id/txt_budget2"
             android:layout_width="221dp"
             android:layout_height="76dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginBottom="224dp"
             android:text="Wie viele Tage planst du ein?"
             android:textAlignment="center"
+            android:textColor="@color/font_color"
             android:textSize="24sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.436"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekBar_budget"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.677" />
 
         <SeekBar
             android:id="@+id/seekBar_days"
@@ -64,49 +96,58 @@
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="104dp"
-            android:progress="100"
             android:max="14"
             android:min="3"
+            android:progress="100"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_budget2"
-            app:layout_constraintVertical_bias="0.112" />
+            app:layout_constraintVertical_bias="0.131" />
 
         <Button
             android:id="@+id/btn_go"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="233dp"
             android:layout_height="84dp"
-            android:layout_marginBottom="130dp"
+            android:layout_marginBottom="48dp"
             android:text="GO!"
+            android:textColor="@color/font_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.533"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekBar_days"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="1.0"
+            app:strokeColor="@color/font_color"
+            app:strokeWidth="1dp" />
 
         <TextView
             android:id="@+id/txt_Sbar_status_budget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Budget"
+            android:textColor="@color/font_color"
             app:layout_constraintBottom_toTopOf="@+id/txt_budget2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekBar_budget"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.078" />
 
         <TextView
             android:id="@+id/txt_Sbar_status_days"
-            android:layout_width="63dp"
-            android:layout_height="16dp"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
             android:text="Days"
+            android:textAlignment="center"
+            android:textColor="@color/font_color"
             app:layout_constraintBottom_toTopOf="@+id/btn_go"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekBar_days"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.246" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

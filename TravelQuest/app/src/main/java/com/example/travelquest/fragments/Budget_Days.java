@@ -76,8 +76,6 @@ public class Budget_Days extends Fragment {
 
             }
         });
-
-
         return v;
     }
 
@@ -85,7 +83,6 @@ public class Budget_Days extends Fragment {
      * Datentransfer an die Datenbank
      */
     private void transferData() {
-
         ((QuestionActivity) this.getActivity()).getUserEntry().setBudget(budgetResult);
     }
 
@@ -99,11 +96,11 @@ public class Budget_Days extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(Budget_Dayd_View_Model.class);
         // TODO: Use the ViewModel
-
+/*
         //Datenbankobjekte aus der Activity abgreifen
         tqDatabase = ((QuestionActivity) this.getActivity()).getDatabase();
         tqDao = ((QuestionActivity) this.getActivity()).getDao();
-
+*/
 
         seekBarBudget = (SeekBar) getView().findViewById(R.id.seekBar_budget);
         seekBarDays = (SeekBar) getView().findViewById(R.id.seekBar_days);
@@ -120,6 +117,10 @@ public class Budget_Days extends Fragment {
 
                 statusBudget.setText(String.valueOf(progress));
                 budgetResult=progress;
+
+                /*
+
+                // TEST
 
                 String test = String.valueOf(progress);
 
@@ -146,7 +147,7 @@ public class Budget_Days extends Fragment {
                 }
 
                 Log.d(TAG, "onProgressChanged: AKTUELLER WERT " + test);
-
+                */
             }
 
             @Override

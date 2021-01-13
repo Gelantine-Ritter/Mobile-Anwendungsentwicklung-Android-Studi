@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.travelquest.QuestionActivity;
 import com.example.travelquest.R;
 
 public class F1_Reisefuehrer extends Fragment {
@@ -42,8 +43,9 @@ public class F1_Reisefuehrer extends Fragment {
             public void onClick(View v) {
 
                 //TODO Daten an DB senden
-
+                transferData(true);
                 changeFragment();
+
             }
         });
 
@@ -56,12 +58,16 @@ public class F1_Reisefuehrer extends Fragment {
             public void onClick(View v) {
 
                 //TODO Daten an DB senden
-
+                transferData(false);
                 changeFragment();
             }
         });
 
         return v;
+    }
+
+    private void transferData(boolean decision) {
+        ((QuestionActivity) this.getActivity()).getUserEntry().setF1(decision);
     }
 
     private void changeFragment() {

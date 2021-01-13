@@ -12,14 +12,15 @@ import com.example.travelquest.database.dao.TQDao;
 import com.example.travelquest.database.db.TQDatabase;
 import com.example.travelquest.database.entities.UserEntry;
 import com.example.travelquest.database.logic.DestinationBuilder;
+import com.example.travelquest.database.util.ObjectHandler;
 import com.example.travelquest.fragments.Budget_Days;
+
+import java.io.ObjectStreamException;
 
 public class QuestionActivity extends AppCompatActivity {
 
     Fragment fragment;
-    TQDatabase db;
-    TQDao tqDao;
-    static UserEntry userEntry;
+    static ObjectHandler objectHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,28 +33,5 @@ public class QuestionActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         //Fragment zur mainactivity hinzufügen
         fm.beginTransaction().add(R.id.mainLayoutQuestionActivity, fragmentBudgetDays).commit();
-
-        // DB INITIALIZATION
-        db = Room.databaseBuilder(getApplicationContext(),
-                TQDatabase.class, "tq_database").allowMainThreadQueries().build();
-        tqDao = db.tqDao();
-        DestinationBuilder.INSTANCE.createDestinationEntries(db, tqDao);
-
-         userEntry = new UserEntry();
-
-
-    }
-
-    public UserEntry getUserEntry(){
-        return userEntry;
-    }
-
-    public TQDatabase getDatabase() {
-        return db;
-    }
-
-    public TQDao getDao() {
-        return tqDao;
-
     }
 }

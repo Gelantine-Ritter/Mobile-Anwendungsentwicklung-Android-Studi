@@ -19,6 +19,7 @@ import android.widget.Button;
 import com.example.travelquest.ErgebnisActivity;
 import com.example.travelquest.QuestionActivity;
 import com.example.travelquest.R;
+import com.example.travelquest.database.util.ObjectHandler;
 
 public class F5_Sternegucken extends Fragment {
 
@@ -71,8 +72,9 @@ public class F5_Sternegucken extends Fragment {
         Intent intent = new Intent(getActivity(), ErgebnisActivity.class);
         startActivity(intent);
     }
-    private void transferData(boolean decision) {
-        ((QuestionActivity) this.getActivity()).getUserEntry().setF5(decision);
+
+    private void transferData (boolean decision) {
+            ObjectHandler.INSTANCE.getUserEntry().setF5(decision);
     }
 
     private void changeFragment() {

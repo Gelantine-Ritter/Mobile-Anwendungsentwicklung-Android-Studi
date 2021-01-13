@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.travelquest.database.util.ObjectHandler;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -19,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         btnStartQuestionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ObjectHandler.INSTANCE.initDB(getApplicationContext());
                 startActivity(new Intent(MainActivity.this, QuestionActivity.class));
-
             }
         });
 

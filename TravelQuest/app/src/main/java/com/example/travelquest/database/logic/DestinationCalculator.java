@@ -13,6 +13,7 @@ public enum DestinationCalculator {
     List<DestinationPercentage> sortedPercentageDestination;
     // calculates the destinations fitting percentage to the users entries (max 100)
     public List<DestinationPercentage> calculatePercentage(TQDao tqDao) {
+
         sortedPercentageDestination = new ArrayList<DestinationPercentage>();
         List<Destination> destinationList = tqDao.getDestinationList();
         UserEntry userEntry = tqDao.getUserEntry();

@@ -9,6 +9,14 @@ public class DestinationPercentage implements Comparable<DestinationPercentage> 
         this.score = score;
     }
 
+    public String getDestinationName() {
+        return destinationName;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
     @Override
     public int compareTo(DestinationPercentage dp) {
         return Double.compare(dp.score, this.score);

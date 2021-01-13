@@ -5,53 +5,91 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.F1_Reisefuehrer"
-    android:id="@+id/fr_reisefuehrer">
+    android:id="@+id/fr_reisefuehrer"
+    android:background="@color/background_all">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Hello"
-            tools:layout_editor_absoluteX="-35dp"
-            tools:layout_editor_absoluteY="-16dp" />
+
+        <RelativeLayout
+            android:id="@+id/shape_layout"
+            android:layout_width="216dp"
+            android:layout_height="216dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circle_bordershape"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.159">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_main"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="100dp">
+
+                <ImageView
+                    android:id="@+id/roundedimage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/reisefuehrer_picture" />
+
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="250dp"
-            android:layout_height="261dp"
-            android:text=" F1 Reiseführer Fragment "
-            android:textColor="#C31919"
-            android:textSize="36sp"
+            android:layout_width="232dp"
+            android:layout_height="101dp"
+            android:text="Meinen Reiseführer habe ich immer in der Hosentasche dabei?"
+            android:textAlignment="center"
+            android:textColor="@color/font_color"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.541"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/shape_layout"
+            app:layout_constraintVertical_bias="0.216" />
 
         <Button
             android:id="@+id/btn_reise_ja"
-            android:layout_width="69dp"
-            android:layout_height="58dp"
-            android:text="ja"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="225dp"
+            android:layout_height="59dp"
+            android:text="Selbstverständlich!"
+            android:textColor="@color/font_color"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_reise_nein"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.846" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.123"
+            app:strokeColor="@color/font_color"
+            app:strokeWidth="1dp" />
 
         <Button
             android:id="@+id/btn_reise_nein"
-            android:layout_width="69dp"
-            android:layout_height="58dp"
-            android:layout_marginEnd="92dp"
-            android:text="Nein"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="225dp"
+            android:layout_height="59dp"
+            android:text="Laaaangweilig!"
+            android:textColor="@color/font_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.846" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_reise_ja"
+            app:layout_constraintVertical_bias="0.135"
+            app:strokeColor="@color/font_color"
+            app:strokeWidth="1dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -3,6 +3,7 @@ package com.example.travelquest.fragments;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+
+import com.example.travelquest.ErgebnisActivity;
 import com.example.travelquest.QuestionActivity;
 import com.example.travelquest.R;
 
@@ -43,6 +46,7 @@ public class F5_Sternegucken extends Fragment {
             public void onClick(View v) {
                 transferData(true);
                 changeFragment();
+                startErgebnisActivity();
             }
         });
 
@@ -55,12 +59,18 @@ public class F5_Sternegucken extends Fragment {
             public void onClick(View v) {
                 transferData(false);
                 changeFragment();
+                startErgebnisActivity();
+
             }
         });
 
         return v;
     }
 
+    private void startErgebnisActivity() {
+        Intent intent = new Intent(getActivity(), ErgebnisActivity.class);
+        startActivity(intent);
+    }
     private void transferData(boolean decision) {
         ((QuestionActivity) this.getActivity()).getUserEntry().setF5(decision);
     }

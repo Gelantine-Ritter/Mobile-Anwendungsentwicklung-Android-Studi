@@ -26,6 +26,7 @@ import com.example.travelquest.database.dao.TQDao;
 import com.example.travelquest.database.db.TQDatabase;
 import com.example.travelquest.database.entities.UserEntry;
 import com.example.travelquest.database.logic.DestinationCalculator;
+import com.example.travelquest.database.util.ObjectHandler;
 
 public class Budget_Days extends Fragment {
 
@@ -65,8 +66,6 @@ public class Budget_Days extends Fragment {
             public void onClick(View v) {
                 transferData();
 
-                DestinationCalculator.INSTANCE.calculatePercentage(tqDao);
-
                 //Nächstes Fragment
                 F1_Reisefuehrer fragmentReisefuehrer = new F1_Reisefuehrer();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -83,7 +82,7 @@ public class Budget_Days extends Fragment {
      * Datentransfer an die Datenbank
      */
     private void transferData() {
-        ((QuestionActivity) this.getActivity()).getUserEntry().setBudget(budgetResult);
+        ObjectHandler.INSTANCE.getUserEntry().setBudget(budgetResult);
     }
 
     /**

@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.example.travelquest.QuestionActivity;
 import com.example.travelquest.R;
+import com.example.travelquest.database.util.ObjectHandler;
 
 public class F2_Kaffee extends Fragment {
 
@@ -60,7 +61,7 @@ public class F2_Kaffee extends Fragment {
         return v;
     }
     private void transferData(boolean decision) {
-        ((QuestionActivity) this.getActivity()).getUserEntry().setF2(decision);
+        ObjectHandler.INSTANCE.getUserEntry().setF2(decision);
     }
 
     private void changeFragment() {

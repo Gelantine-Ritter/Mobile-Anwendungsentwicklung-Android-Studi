@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.example.travelquest.QuestionActivity;
 import com.example.travelquest.R;
+import com.example.travelquest.database.util.ObjectHandler;
 
 public class F3_Netflix extends Fragment {
 
@@ -61,16 +62,16 @@ public class F3_Netflix extends Fragment {
         return v;
     }
     private void transferData(boolean decision) {
-        ((QuestionActivity) this.getActivity()).getUserEntry().setF3(decision);
+        ObjectHandler.INSTANCE.getUserEntry().setF3(decision);
     }
 
 
     private void changeFragment() {
 
-        F3_Netflix fragmentNetflix = new F3_Netflix();
+        F4_Muell fragmentMuell = new F4_Muell();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         //altest Fragment in mainLayout wird ersetzt mit dem neuem Fragment
-        transaction.replace(R.id.mainLayoutQuestionActivity, fragmentNetflix);
+        transaction.replace(R.id.mainLayoutQuestionActivity, fragmentMuell);
         transaction.commit();
     }
 

@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.example.travelquest.QuestionActivity;
 import com.example.travelquest.R;
+import com.example.travelquest.database.util.ObjectHandler;
 
 public class F4_Muell extends Fragment {
 
@@ -62,15 +63,15 @@ public class F4_Muell extends Fragment {
     }
 
     private void transferData(boolean decision) {
-        ((QuestionActivity) this.getActivity()).getUserEntry().setF4(decision);
+        ObjectHandler.INSTANCE.getUserEntry().setF4(decision);
     }
 
     private void changeFragment() {
 
-        F4_Muell fragmentMuell = new F4_Muell();
+        F5_Sternegucken fragmentSternegucken = new F5_Sternegucken();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         //altest Fragment in mainLayout wird ersetzt mit dem neuem Fragment
-        transaction.replace(R.id.mainLayoutQuestionActivity, fragmentMuell);
+        transaction.replace(R.id.mainLayoutQuestionActivity, fragmentSternegucken);
         transaction.commit();
     }
 

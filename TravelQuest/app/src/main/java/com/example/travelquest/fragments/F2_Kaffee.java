@@ -18,7 +18,7 @@ import com.example.travelquest.R;
 
 public class F2_Kaffee extends Fragment {
 
-    Button btnJaaa;
+    Button btnJa;
     Button btnNein;
 
     private F2_Kaffee_ViewModel mViewModel;
@@ -35,8 +35,8 @@ public class F2_Kaffee extends Fragment {
         /**
          * OnClick: Daten an Datenbank übermittel und replace durch ein neues Fragment
          */
-        btnJaaa = v.findViewById(R.id.btn_kaffee_ja);
-        btnJaaa.setOnClickListener(new View.OnClickListener() {
+        btnJa = v.findViewById(R.id.btn_kaffee_ja);
+        btnJa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

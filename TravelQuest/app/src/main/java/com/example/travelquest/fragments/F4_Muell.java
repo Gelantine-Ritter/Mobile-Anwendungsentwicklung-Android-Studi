@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.travelquest.QuestionActivity;
 import com.example.travelquest.R;
 
 public class F4_Muell extends Fragment {
@@ -40,9 +41,7 @@ public class F4_Muell extends Fragment {
         btnJa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //TODO Daten an DB senden
-
+                transferData(true);
                 changeFragment();
             }
         });
@@ -54,14 +53,16 @@ public class F4_Muell extends Fragment {
         btnNein.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //TODO Daten an DB senden
-
+                transferData(false);
                 changeFragment();
             }
         });
 
         return v;
+    }
+
+    private void transferData(boolean decision) {
+        ((QuestionActivity) this.getActivity()).getUserEntry().setF4(decision);
     }
 
     private void changeFragment() {

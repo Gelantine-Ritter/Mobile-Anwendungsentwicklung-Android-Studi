@@ -41,8 +41,6 @@ public class F1_Reisefuehrer extends Fragment {
         btnJa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //TODO Daten an DB senden
                 transferData(true);
                 changeFragment();
 
@@ -56,13 +54,10 @@ public class F1_Reisefuehrer extends Fragment {
         btnNein.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //TODO Daten an DB senden
                 transferData(false);
                 changeFragment();
             }
         });
-
         return v;
     }
 

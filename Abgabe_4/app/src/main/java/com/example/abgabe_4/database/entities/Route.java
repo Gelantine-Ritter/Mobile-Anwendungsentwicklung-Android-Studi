@@ -4,16 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.example.abgabe_4.database.util.Converters;
 import com.example.abgabe_4.database.util.Koordinate;
 import com.example.abgabe_4.database.util.Generator;
 
 import java.util.List;
 
 @Entity(tableName="route")
+@TypeConverters({Converters.class})
 public class Route {
-
-
 
     @NonNull
     @PrimaryKey
@@ -25,14 +26,15 @@ public class Route {
     @ColumnInfo
     Koordinate ende;
 
-    @ColumnInfo
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     byte[]gpx;
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    byte[]image;
 
     @ColumnInfo
     double dauer;
 
-    @ColumnInfo
-    List<Poi> pois;
 
     public Route(){
         this.bezeichnung = "Route_" + Generator.INSTANCE.getRandomNumberAsString();
@@ -83,11 +85,11 @@ public class Route {
         this.dauer = dauer;
     }
 
-    public List <Poi> getPois() {
-        return pois;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setPois(List <Poi> pois) {
-        this.pois = pois;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

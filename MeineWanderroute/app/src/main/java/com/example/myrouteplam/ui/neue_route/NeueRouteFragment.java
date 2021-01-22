@@ -126,7 +126,6 @@ public class NeueRouteFragment extends Fragment implements LocationListener {
         locationManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
         routeBegin = true;
         dataPointList = new ArrayList<String[]>();
-
     }
 
 

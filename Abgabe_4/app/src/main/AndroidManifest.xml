@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Abgabe_4">
+        <activity android:name=".activities.CameraIntent"></activity>
         <activity android:name=".activities.RouteView" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>

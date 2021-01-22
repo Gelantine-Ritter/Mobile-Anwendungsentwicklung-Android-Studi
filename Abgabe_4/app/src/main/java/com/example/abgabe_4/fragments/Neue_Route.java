@@ -11,12 +11,24 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.abgabe_4.R;
+import com.example.abgabe_4.database.entities.Route;
+import com.example.abgabe_4.database.logic.DataTracker;
+import com.example.abgabe_4.database.util.ObjectHandler;
 
 public class Neue_Route extends Fragment {
 
     private NeueRouteViewModel mViewModel;
+
+    Button startStopButton;
+    boolean  startStop = false;
+
+    Route route;
+
+    byte[] image;
+
 
     public static Neue_Route newInstance() {
         return new Neue_Route();
@@ -25,7 +37,41 @@ public class Neue_Route extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.neue__route_fragment, container, false);
+
+        View v = inflater.inflate(R.layout.neue__route_fragment, container, false);
+
+        DataTracker dataTracker = new DataTracker(v.getContext());
+
+
+        startStopButton = v.findViewById(R.id.btn_neue_route);
+        startStopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!startStop) {
+                    dataTracker.start();
+                }else {
+                    dataTracker.stop();
+                    buildRoute(dataTracker);
+
+                    ObjectHandler.INSTANCE.getRouteDao().addRoute(route);
+                }
+
+            }
+        });
+
+
+
+
+        return v;
+    }
+
+    void buildRoute (DataTracker dataTracker) {
+        route.setBeginn(dataTracker.longLatStart);
+        route.setEnde(dataTracker.longLatStop);
+        route.setGpx(dataTracker.generateGPX());
+        route.setDauer(dataTracker.dauer);
+        route.setImage(image);
     }
 
     @Override

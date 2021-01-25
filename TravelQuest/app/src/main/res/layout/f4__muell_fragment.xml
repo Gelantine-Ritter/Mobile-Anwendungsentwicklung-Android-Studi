@@ -48,7 +48,7 @@
             android:id="@+id/textView2"
             android:layout_width="229dp"
             android:layout_height="45dp"
-            android:text="Trennst du brav den Müll!"
+            android:text="Trennst du brav den Müll?"
             android:textAlignment="center"
             android:textColor="@color/font_color"
             android:textSize="20sp"
@@ -57,6 +57,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.568" />
+
 
         <Button
             android:id="@+id/btn_muell_ja"
@@ -67,27 +68,26 @@
             android:textColor="@color/font_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintHorizontal_bias="0.47"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.149"
+            app:layout_constraintVertical_bias="0.213"
             app:strokeColor="@color/font_color"
             app:strokeWidth="1dp" />
-
 
         <Button
             android:id="@+id/btn_muell_nein"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="226dp"
             android:layout_height="57dp"
-            android:text="Ja, also hm...ich habenur eine Tonne"
+            android:text="Ja, also hm...ich habe nur eine Tonne"
             android:textColor="@color/font_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.475"
+            app:layout_constraintHorizontal_bias="0.47"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_muell_ja"
-            app:layout_constraintVertical_bias="0.21"
+            app:layout_constraintVertical_bias="0.102"
             app:strokeColor="@color/font_color"
             app:strokeWidth="1dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>

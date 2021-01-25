@@ -49,8 +49,8 @@
             android:id="@+id/txt_budget"
             android:layout_width="223dp"
             android:layout_height="47dp"
-            android:layout_marginBottom="380dp"
-            android:text="Wie ist dein Budget?"
+            android:layout_marginBottom="364dp"
+            android:text="Was ist dein Budget?"
             android:textAlignment="center"
             android:textColor="@color/font_color"
             android:textSize="20sp"
@@ -76,18 +76,19 @@
 
         <TextView
             android:id="@+id/txt_budget2"
-            android:layout_width="221dp"
-            android:layout_height="76dp"
+            android:layout_width="220dp"
+            android:layout_height="47dp"
             android:layout_marginBottom="224dp"
             android:text="Wie viele Tage planst du ein?"
             android:textAlignment="center"
             android:textColor="@color/font_color"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekBar_budget"
-            app:layout_constraintVertical_bias="0.677" />
+            app:layout_constraintVertical_bias="0.932" />
 
         <SeekBar
             android:id="@+id/seekBar_days"
@@ -147,7 +148,7 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekBar_days"
-            app:layout_constraintVertical_bias="0.246" />
+            app:layout_constraintVertical_bias="0.205" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

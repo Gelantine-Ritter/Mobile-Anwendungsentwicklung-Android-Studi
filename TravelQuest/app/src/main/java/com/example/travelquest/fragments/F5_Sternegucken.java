@@ -1,5 +1,6 @@
 package com.example.travelquest.fragments;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -64,6 +65,22 @@ public class F5_Sternegucken extends Fragment {
 
             }
         });
+
+        // This callback will only be called when MyFragment is at least Started.
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                F4_Muell goBack = new F4_Muell();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                //altest Fragment in mainLayout wird ersetzt mit dem neuem Fragment
+                transaction.replace(R.id.mainLayoutQuestionActivity, goBack);
+                transaction.commit();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+        // The callback can be enabled or disabled here or in handleOnBackPressed()
 
         return v;
     }

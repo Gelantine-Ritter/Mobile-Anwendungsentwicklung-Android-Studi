@@ -48,7 +48,7 @@
             android:id="@+id/textView2"
             android:layout_width="229dp"
             android:layout_height="45dp"
-            android:text="Berghain oder Netflix!"
+            android:text="Berghain oder Netflix?"
             android:textAlignment="center"
             android:textColor="@color/font_color"
             android:textSize="20sp"
@@ -67,10 +67,10 @@
             android:textColor="@color/font_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintHorizontal_bias="0.47"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.149"
+            app:layout_constraintVertical_bias="0.217"
             app:strokeColor="@color/font_color"
             app:strokeWidth="1dp" />
 
@@ -86,7 +86,7 @@
             app:layout_constraintHorizontal_bias="0.475"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_netflix"
-            app:layout_constraintVertical_bias="0.21"
+            app:layout_constraintVertical_bias="0.109"
             app:strokeColor="@color/font_color"
             app:strokeWidth="1dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,8 +48,8 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="232dp"
-            android:layout_height="101dp"
+            android:layout_width="235dp"
+            android:layout_height="86dp"
             android:text="Meinen Reiseführer habe ich immer in der Hosentasche dabei!"
             android:textAlignment="center"
             android:textColor="@color/font_color"

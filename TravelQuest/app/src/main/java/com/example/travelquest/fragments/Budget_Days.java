@@ -166,6 +166,11 @@ public class Budget_Days extends Fragment {
         seekBarDays.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress == 14) {
+                    statusDays.setText(String.valueOf(progress) + "+");
+                    Log.d(TAG, "onProgressChanged: "+progress);
+
+                }
                 statusDays.setText(String.valueOf(progress));
 
             }

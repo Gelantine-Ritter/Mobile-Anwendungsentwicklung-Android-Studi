@@ -47,11 +47,11 @@ public class ErgebnisActivity extends AppCompatActivity {
 //        textErgebnis.setText(destinationPercentageList.get(0).getDestinationName());
 
         textErgebnis1.setText(destinationPercentageList.get(0).getDestinationName());
-        textProzent1.setText(String.valueOf(destinationPercentageList.get(0).getScore()));
+        textProzent1.setText(String.valueOf(destinationPercentageList.get(0).getScore()) + "%");
         textErgebnis2.setText(destinationPercentageList.get(1).getDestinationName());
-        textProzent2.setText(String.valueOf(destinationPercentageList.get(1).getScore()));
+        textProzent2.setText(String.valueOf(destinationPercentageList.get(1).getScore()) + "%");
         textErgebnis3.setText(destinationPercentageList.get(2).getDestinationName());
-        textProzent3.setText(String.valueOf(destinationPercentageList.get(2).getScore()));
+        textProzent3.setText(String.valueOf(destinationPercentageList.get(2).getScore()) + "%");
 
         btnStartAgain.setOnClickListener(new View.OnClickListener() {
             @Override

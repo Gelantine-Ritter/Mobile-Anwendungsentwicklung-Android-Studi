@@ -2,7 +2,10 @@ package com.example.travelquest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnStartQuestionA = (Button) findViewById(R.id.btn_start);
+
+
+        Button btnStartQuestionA = findViewById(R.id.btn_start);
         btnStartQuestionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

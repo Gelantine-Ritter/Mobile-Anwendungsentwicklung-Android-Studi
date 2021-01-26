@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DataTracker implements LocationListener {
 
+    private static final String TAG = "DataTracker";
     Context context;
 
     boolean routeBegin;
@@ -42,16 +44,15 @@ public class DataTracker implements LocationListener {
     public double dauer;
 
     public DataTracker (Context context) {
+        Log.d(TAG, "DataTracker: DataTracker()");
         this.context = context;
 
-        clearData();
         prepare();
     }
 
     public void start () {
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         initLocationTracking();
-
     }
 
     public void stop(){
@@ -60,18 +61,16 @@ public class DataTracker implements LocationListener {
 
     void prepare() {
         context = context.getApplicationContext();
-        routeBegin = true;
         dataPointList = new ArrayList<String[]>();
-    }
 
-    void clearData() {
         routeBegin = true;
-        dataPointList = new ArrayList<String[]>();
     }
 
     // -------------- LOGGING ---------------------
 
     void logData() {
+
+        Log.d(TAG, "logData: logData() is called");
 
         this.timestampNow = String.valueOf(new Timestamp(System.currentTimeMillis()));
 
@@ -84,7 +83,12 @@ public class DataTracker implements LocationListener {
         dataPointList.add(data);
 
         if (routeBegin) {
+            Log.d(TAG, "logData: if(routeBegin) == true");
+
+            // save initial koordinate
             longLatStart = new Koordinate(latitude, longitude);
+
+            // Save initial timestamp
             timeStart = new Timestamp(System.currentTimeMillis());
             routeBegin = false;
         }
@@ -105,6 +109,8 @@ public class DataTracker implements LocationListener {
         timeStop = new Timestamp(System.currentTimeMillis());
         dauer = (double) getDateDiff(timeStart, timeStop);
 
+        // stop location updates
+        locationManager.removeUpdates(this);
     }
 
 
@@ -113,6 +119,7 @@ public class DataTracker implements LocationListener {
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
+        Log.d(TAG, "onLocationChanged: onLocationChanged is called");
         this.longitude = location.getLongitude();
         this.latitude = location.getLatitude();
         // --------------- HERE HAPPENS THE MAGIC ---------------------
@@ -120,6 +127,7 @@ public class DataTracker implements LocationListener {
     }
 
     void initLocationTracking() {
+        Log.d(TAG, "initLocationTracking");
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
@@ -145,6 +153,7 @@ public class DataTracker implements LocationListener {
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) this);
+        Log.d(TAG, "getGPSNetwork: GPSNetwork is used");
     }
 
     //Case: GPS Daten über Satellit abrufen
@@ -161,6 +170,7 @@ public class DataTracker implements LocationListener {
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+        Log.d(TAG, "getGPSNetwork: GPSNetwork is used");
     }
 
     // ----- GENERATE GPX ---------------
@@ -209,6 +219,9 @@ public class DataTracker implements LocationListener {
      * @return
      */
     public static long getDateDiff(Timestamp oldTs, Timestamp newTs) {
+
+        Log.d(TAG, "logDataEnde: timestart: " + oldTs + " ---- timestop: " + newTs);
+
         long diffInMS = newTs.getTime() - oldTs.getTime();
         return TimeUnit.MINUTES.convert(diffInMS, TimeUnit.SECONDS);
 

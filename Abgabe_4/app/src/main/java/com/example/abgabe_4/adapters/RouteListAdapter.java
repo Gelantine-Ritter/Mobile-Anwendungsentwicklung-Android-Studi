@@ -1,5 +1,6 @@
 package com.example.abgabe_4.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.ViewHolder> {
 
+    private static final String TAG = "RecyclerView: ";
     private ArrayList<Route> mRouteList;
     private OnRouteListener mOnRouteListener;
 
@@ -94,6 +96,7 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.View
         Route currentItem = mRouteList.get(position);
         holder.routeName.setText(currentItem.getBezeichnung());
         holder.routeInfo.setText("" + currentItem.getDauer());
+        Log.d(TAG, "AAAAAAAAAAAAAAAAonBindViewHolder: " + currentItem.getBezeichnung());
 
     }
 

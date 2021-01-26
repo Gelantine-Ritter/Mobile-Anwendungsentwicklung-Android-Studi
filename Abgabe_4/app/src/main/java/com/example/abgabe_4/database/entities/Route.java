@@ -10,6 +10,8 @@ import com.example.abgabe_4.database.util.Converters;
 import com.example.abgabe_4.database.util.Koordinate;
 import com.example.abgabe_4.database.util.Generator;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 @Entity(tableName="route")
@@ -35,9 +37,15 @@ public class Route {
     @ColumnInfo
     double dauer;
 
+    public Route(){}
 
-    public Route(){
-        this.bezeichnung = "Route_" + Generator.INSTANCE.getRandomNumberAsString();
+    public Route(@NotNull String routenName){
+        if (routenName != null || routenName.equals("Name der Route")) {
+            this.bezeichnung = routenName;
+        // wenn der name der route leer oder auf dem initial wert ist
+        }else {
+            this.bezeichnung = "Route_" + Generator.INSTANCE.getRandomNumberAsString();
+        }
     }
 
 

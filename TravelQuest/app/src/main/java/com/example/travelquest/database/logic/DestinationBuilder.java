@@ -20,7 +20,7 @@ public enum DestinationBuilder {
                     // PARIS
                     new Destination("Paris", 7, 800, true, false, false, true, true),
                     // THAILAND
-                    new Destination("Thainland", 14, 1000, false, false, false, false, false),
+                    new Destination("Thailand", 14, 1000, false, false, false, false, false),
                     // BRANDENBURG
                     new Destination("Brandenburg", 3, 100, true, true, true, true, true),
                     // NEW YORK

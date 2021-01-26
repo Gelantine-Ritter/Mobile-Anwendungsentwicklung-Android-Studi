@@ -98,8 +98,8 @@
 
     <TextView
         android:id="@+id/txt_prozent_1"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="82dp"
+        android:layout_height="36dp"
         android:textAlignment="center"
         android:textColor="@color/font_color"
         android:textSize="20sp"
@@ -112,8 +112,8 @@
 
     <TextView
         android:id="@+id/txt_prozent_2"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="79dp"
+        android:layout_height="36dp"
         android:textAlignment="center"
         android:textColor="@color/font_color"
         android:textSize="20sp"
@@ -126,7 +126,7 @@
 
     <TextView
         android:id="@+id/txt_prozent_3"
-        android:layout_width="40dp"
+        android:layout_width="76dp"
         android:layout_height="40dp"
         android:layout_marginBottom="160dp"
         android:textAlignment="center"

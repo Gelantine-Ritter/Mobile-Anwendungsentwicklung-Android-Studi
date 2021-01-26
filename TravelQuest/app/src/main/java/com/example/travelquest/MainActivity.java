@@ -12,6 +12,10 @@ import android.widget.Button;
 
 import com.example.travelquest.database.util.ObjectHandler;
 
+/**
+ * Startscreen und Initialisierung
+ */
+
 public class MainActivity extends AppCompatActivity {
 
 

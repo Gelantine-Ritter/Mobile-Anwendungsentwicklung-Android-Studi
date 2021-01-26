@@ -13,7 +13,10 @@ import com.example.travelquest.database.logic.DestinationPercentage;
 
 import java.util.List;
 
-
+/**
+ * Klasse stellt ein Enum bereit welches global den Zugriff auf
+ * alle relevanten Objekte und Methoden zur Verfügung stellt
+ */
 public enum ObjectHandler {
     INSTANCE;
 

@@ -40,8 +40,7 @@ public class Budget_Days extends Fragment {
     TextView statusBudget;
     TextView statusDays;
 
-    TQDatabase tqDatabase;
-    TQDao tqDao;
+
 
 
     private Budget_Dayd_View_Model mViewModel;
@@ -95,11 +94,6 @@ public class Budget_Days extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(Budget_Dayd_View_Model.class);
         // TODO: Use the ViewModel
-/*
-        //Datenbankobjekte aus der Activity abgreifen
-        tqDatabase = ((QuestionActivity) this.getActivity()).getDatabase();
-        tqDao = ((QuestionActivity) this.getActivity()).getDao();
-*/
 
         seekBarBudget = (SeekBar) getView().findViewById(R.id.seekBar_budget);
         seekBarDays = (SeekBar) getView().findViewById(R.id.seekBar_days);
@@ -113,40 +107,19 @@ public class Budget_Days extends Fragment {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progress = progress / 100 * 100;
 
-                statusBudget.setText(String.valueOf(progress));
-                budgetResult=progress;
+                if (progress == 3000) {
+                    statusBudget.setText(new StringBuilder().append(progress).append("+").toString());
 
-                /*
 
-                // TEST
+                } else {
+                    statusBudget.setText(String.valueOf(progress));
 
-                String test = String.valueOf(progress);
-
-                if (progress == 100) {
-                    Log.d(TAG, "Brandenburg");
-                }
-                if (progress > 100 && progress <= 200) {
-                    Log.d(TAG, "Brandenburg, Prag");
-                }
-                if (progress > 200 && progress <= 800) {
-                    Log.d(TAG, "Brandenburg, Prag, Paris");
-                }
-                if (progress > 800 && progress <= 1000) {
-                    Log.d(TAG, "Brandenburg, Prag, Paris, Thailand");
-                }
-                if (progress > 1000 && progress <= 1500) {
-                    Log.d(TAG, "Brandenburg, Prag, Paris, Thailand, New York");
-                }
-                if (progress > 1500 && progress <= 2000) {
-                    Log.d(TAG, "Brandenburg, Prag, Paris, Thailand, New York, Ibiza");
-                }
-                if (progress >= 3000) {
-                    Log.d(TAG, "Brandenburg, Prag, Paris, Thailand, New York, Ibiza, Nordpol");
                 }
 
-                Log.d(TAG, "onProgressChanged: AKTUELLER WERT " + test);
-                */
+                 budgetResult = progress;
+
             }
 
             @Override
@@ -167,12 +140,12 @@ public class Budget_Days extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (progress == 14) {
-                    statusDays.setText(String.valueOf(progress) + "+");
-                    Log.d(TAG, "onProgressChanged: "+progress);
+                    statusDays.setText(new StringBuilder().append(progress).append("+").toString());
+                    Log.d(TAG, "onProgressChanged: " + progress);
 
+                } else {
+                    statusDays.setText(String.valueOf(progress));
                 }
-                statusDays.setText(String.valueOf(progress));
-
             }
 
             @Override

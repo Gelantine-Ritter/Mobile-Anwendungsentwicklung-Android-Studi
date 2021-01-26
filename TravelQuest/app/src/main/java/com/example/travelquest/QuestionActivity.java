@@ -17,6 +17,10 @@ import com.example.travelquest.fragments.Budget_Days;
 
 import java.io.ObjectStreamException;
 
+/**
+ * Activity startet löst Fragment 1 aus
+ */
+
 public class QuestionActivity extends AppCompatActivity {
 
     Fragment fragment;

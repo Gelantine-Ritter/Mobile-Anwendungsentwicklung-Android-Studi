@@ -9,6 +9,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 
 import com.example.abgabe_4.R;
+import com.example.abgabe_4.database.util.ObjectHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //DB init
+        ObjectHandler.INSTANCE.initDB(this);
 
         //Navigationbar einbinden
         BottomNavigationView navView = findViewById(R.id.nav_view);

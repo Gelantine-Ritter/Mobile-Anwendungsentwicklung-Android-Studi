@@ -1,5 +1,7 @@
 package com.example.abgabe_4.database.entities;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -18,6 +20,7 @@ import java.util.List;
 @TypeConverters({Converters.class})
 public class Route {
 
+    private static final String TAG = "Route: ";
     @NonNull
     @PrimaryKey
     String bezeichnung;
@@ -37,7 +40,15 @@ public class Route {
     @ColumnInfo
     double dauer;
 
-    public Route(){}
+    // Helper Variable for graph display
+    @ColumnInfo
+    public List <Koordinate> koordinates;
+
+    // Constructors
+    public Route(){
+        Log.d(TAG, "Route: Random Route_Name was assigned");
+        this.bezeichnung = "Route_" + Generator.INSTANCE.getRandomNumberAsString();
+    }
 
     public Route(@NotNull String routenName){
         if (routenName != null || routenName.equals("Name der Route")) {
@@ -47,6 +58,7 @@ public class Route {
             this.bezeichnung = "Route_" + Generator.INSTANCE.getRandomNumberAsString();
         }
     }
+
 
 
     // GETTER / SETTER
@@ -99,5 +111,13 @@ public class Route {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public void setKoordinateList(List <Koordinate> koordinateList) {
+        this.koordinates = koordinateList;
+    }
+
+    public List<Koordinate>getKoordinateList(){
+        return this.koordinates;
     }
 }

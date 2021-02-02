@@ -49,7 +49,7 @@ public class Neue_Route extends Fragment {
 
 
 
-
+        routeNameTextView = v.findViewById(R.id.txt_neue_route);
         startStopButton = v.findViewById(R.id.btn_neue_route);
         startStopButton.setOnClickListener(new View.OnClickListener() {
 
@@ -68,6 +68,7 @@ public class Neue_Route extends Fragment {
                 }else {
                     switchButtonFunction();
                     dataTracker.stop();
+
                     buildRoute(dataTracker);
 
                     Log.d(TAG, "onClick: stopped tracking");
@@ -101,7 +102,8 @@ public class Neue_Route extends Fragment {
 
         route.setBeginn(dataTracker.longLatStart);
         route.setEnde(dataTracker.longLatStop);
-        route.setGpx(dataTracker.generateGPX());
+        route.setGpx(dataTracker.generateGPX(route.getBezeichnung()));
+        route.setKoordinateList(dataTracker.getKoordinatenList());
         route.setDauer(dataTracker.dauer);
         route.setImage(image);
     }

@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.abgabe_4.database.entities.Route;
 import com.example.abgabe_4.database.util.Koordinate;
+import com.example.abgabe_4.database.util.ObjectHandler;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -180,12 +181,11 @@ public class DataTracker implements LocationListener {
     /**
      * Methode erstellt eine GPX Datei aus den getrackten Daten und loggt zeilenwise die Route.
      */
-    public byte [] generateGPX() {
-        String track_name = getRandomName();
-        String filename = "tracked_data_" + track_name + ".gpx";
+    public byte [] generateGPX(String route_name) {
+        String filename = "tracked_data_" + route_name + ".gpx";
 
         String header = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?><gpx version=\"1.1\" creator=\"gruppe-kilian-anna\">";
-        String name = "<name>" + "track" + track_name + "</name><trk><trkseg>\n";
+        String name = "<name>" + "track" + route_name + "</name><trk><trkseg>\n";
 
         String segments = "";
 
@@ -198,6 +198,15 @@ public class DataTracker implements LocationListener {
         String finalString = header + name + segments + footer;
         gpxFile = finalString.getBytes();
         return gpxFile;
+    }
+
+    // exports list for displaying the graph with lat/long values
+    public List <Koordinate> getKoordinatenList (){
+        List <Koordinate> koordinates = new ArrayList<>();
+        for (String[] arr : dataPointList) {
+            koordinates.add(new Koordinate(Double.parseDouble(arr[1]), Double.parseDouble(arr[2])));
+        }
+        return koordinates;
     }
 
     /**

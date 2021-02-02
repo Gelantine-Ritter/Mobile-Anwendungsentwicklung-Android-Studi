@@ -3,7 +3,9 @@ package com.example.abgabe_4.fragments;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.abgabe_4.R;
+import com.example.abgabe_4.activities.RouteView;
 import com.example.abgabe_4.adapters.RouteListAdapter;
 import com.example.abgabe_4.database.entities.Route;
 import com.example.abgabe_4.database.util.ObjectHandler;
@@ -56,19 +59,6 @@ public class Route_List extends Fragment implements RouteListAdapter.OnRouteList
                 //Items für die Listendarstellung
                 routenListeArr = (ArrayList<Route>) ObjectHandler.INSTANCE.getRouteDao().getRouten();
                 // ArrayList<Route> routenListeArr = new ArrayList<>();
-/**
- for (Route r : routeList){
- String bezeichnung = r.getBezeichnung();
- String beginn = r.getBeginn().toString();
- String ende = r.getEnde().toString();
- byte[] gpx = r.getGpx();
- double dauer=r.getDauer();
- //Poi poi = r.getPoi();
-
- routenListeArr.add(new Route(bezeichnung, beginn, ende, gpx,dauer));
-
- }*/
-
 
                 mRecyclerView = root.findViewById(R.id.liste_routen);
                 mRecyclerView.setHasFixedSize(true);
@@ -79,24 +69,18 @@ public class Route_List extends Fragment implements RouteListAdapter.OnRouteList
             }
         });
         return root;
-
-
     }
-
 
     @Override
     public void onRouteClick(int position) {
+        // id of the item to hand to intent (single route)
         Route route = routenListeArr.get(position);
-        String bezeichnung = route.getBezeichnung();
-        double dauer = route.getDauer();
-        Log.i(TAG, "Routen Bezeichnung : " + bezeichnung + " und Dauer " + dauer);
-        Log.d(TAG, "onRouteClick: Item in RecycleView geklickt");
 
-
-        //  Intent intent = new Intent(c, Single_Route_Fragment.class);
-        //  intent.putExtra("route_object", (Parcelable) routenListeArr.get(position));
-        //  startActivity(intent);
-
+        Intent intent = new Intent(getActivity(), RouteView.class);
+        Bundle b = new Bundle();
+        b.putString("route_bezeichnung", route.getBezeichnung());
+        intent.putExtras(b);
+        getActivity().startActivity(intent);
 
     }
 }
